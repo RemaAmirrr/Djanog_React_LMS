@@ -27,17 +27,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
-# MAILGUN_API_KEY = env("MAILGUN_API_KEY")
-# MAILERSEND_API_TOKEN = env("MAILERSEND_API_TOKEN")
-# MAILGUN_SENDER_DOMAIN = env("MAILGUN_SENDER_DOMAIN")
+
+MAILGUN_API_KEY = env("MAILGUN_API_KEY")
+MAILERSEND_API_TOKEN = env("MAILERSEND_API_TOKEN")
+MAILGUN_SENDER_DOMAIN = env("MAILGUN_SENDER_DOMAIN")
 
 # STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
 # PAYPAL_CLIENT_ID = env("PAYPAL_CLIENT_ID") # PAYPAL_CLIENT_ID=9-320034750834758934758347
 # PAYPAL_SECRET_ID = env("PAYPAL_SECRET_ID") # PAYPAL_SECRET_ID=9-320034750834758934758347
-
 # FRONTEND_SITE_URL = env("FRONTEND_SITE_URL")
 
-# SECURITY WARNING: don't run with debug turned on in production!
+ANYMAIL = {
+    "MAILGUN_API_KEY": env("MAILGUN_API_KEY"),
+    "MAILGUN_SENDER_DOMAIN": env("MAILGUN_SENDER_DOMAIN"),
+}
+
+FROM_EMAIL = env("FROM_EMAIL")
+EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -58,6 +65,7 @@ INSTALLED_APPS = [
      'userauths',
      'api',
      'core',
+     'drf_yasg',
 
     # Third Party Apps
     'rest_framework',
