@@ -103,7 +103,7 @@ function Login() {
                       </div>
                     </div>
                     <div>
-                      <Link to="/forgot-password/">Forgot your password?</Link>
+                      <Link to="/forgot_password/">Forgot your password?</Link>
                     </div>
                   </div>
                   <div>
@@ -120,7 +120,7 @@ function Login() {
 
                       {isLoading === false && (
                         <button type="submit" className="btn btn-primary">
-                          Sign in <i className="fas fa-sign-in-alt"></i>
+                          Login <i className="fas fa-sign-in-alt"></i>
                         </button>
                       )}
                     </div>

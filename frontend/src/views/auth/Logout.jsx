@@ -5,6 +5,7 @@ import { logout } from "../../utils/auth";
 import { Link } from "react-router-dom";
 
 function Logout() {
+
   useEffect(() => {
     logout();
   }, []);
@@ -32,7 +33,7 @@ function Logout() {
                     <Link to={`/login/`} className="btn btn-primary me-2 w-100">
                       Login <i className="fas fa-sign-in-alt"></i>
                     </Link>
-                    <Link to={`/login/`} className="btn btn-primary w-100">
+                    <Link to={`/register/`} className="btn btn-primary w-100">
                       Register <i className="fas fa-user-plus"></i>
                     </Link>
                   </div>

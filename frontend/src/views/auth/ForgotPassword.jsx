@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BaseHeader from "../partials/BaseHeader";
 import BaseFooter from "../partials/BaseFooter";
-import { Link } from "react-router-dom";
 import apiInstance from "../../utils/axios";
+
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +21,6 @@ function ForgotPassword() {
       setIsLoading(false);
     }
   };
-
   return (
     <>
       <BaseHeader />

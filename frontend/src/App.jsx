@@ -10,12 +10,12 @@ import PrivateRoute from "./layouts/PrivateRoute";
 
 import Register from "../src/views/auth/Register";
 import Login from "../src/views/auth/Login";
-// import Logout from "./views/auth/Logout";
-// import ForgotPassword from "./views/auth/ForgotPassword";
-// import CreateNewPassword from "./views/auth/CreateNewPassword";
+import Logout from "./views/auth/Logout";
+import ForgotPassword from "./views/auth/ForgotPassword";
+import CreateNewPassword from "./views/auth/CreateNewPassword";
 
-// import Index from "./views/base/Index";
-// import CourseDetail from "./views/base/CourseDetail";
+import Index from "./views/base/Index";
+import CourseDetail from "./views/base/CourseDetail";
 // import Cart from "./views/base/Cart";
 // import Checkout from "./views/base/Checkout";
 // import Success from "./views/base/Success";
@@ -55,6 +55,17 @@ function App() {
             <Routes>
               <Route path="/register/" element={<Register />} />
               <Route path="/login/" element={<Login />} />
+              <Route path="/logout/" element={<Logout />} />
+              <Route path="/forgot_Password/" element={<ForgotPassword />} />
+              <Route path="/change_Password/" element={<CreateNewPassword />} />
+
+              {/* Core Componet */}
+              <Route path="/" element={<Index />} />
+              <Route path="/course-detail/" element={<CourseDetail />} />
+              <Route path="/course-detail/:slug/" element={<CourseDetail />} />
+
+
+
             </Routes>
           </MainWrapper>
         </BrowserRouter>
