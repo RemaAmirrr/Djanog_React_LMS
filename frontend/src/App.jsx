@@ -1,35 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+
+import { CartContext, ProfileContext } from "./views/plugin/Context";
+import apiInstance from "./utils/axios";
+import CartId from "./views/plugin/CartId";
+
+import MainWrapper from "./layouts/MainWrapper";
+import PrivateRoute from "./layouts/PrivateRoute";
+
+import Register from "../src/views/auth/Register";
+import Login from "../src/views/auth/Login";
+// import Logout from "./views/auth/Logout";
+// import ForgotPassword from "./views/auth/ForgotPassword";
+// import CreateNewPassword from "./views/auth/CreateNewPassword";
+
+// import Index from "./views/base/Index";
+// import CourseDetail from "./views/base/CourseDetail";
+// import Cart from "./views/base/Cart";
+// import Checkout from "./views/base/Checkout";
+// import Success from "./views/base/Success";
+// import Search from "./views/base/Search";
+
+// import StudentDashboard from "./views/student/Dashboard";
+// import StudentCourses from "./views/student/Courses";
+// import StudentCourseDetail from "./views/student/CourseDetail";
+// import Wishlist from "./views/student/Wishlist";
+// import StudentProfile from "./views/student/Profile";
+// import useAxios from "./utils/useAxios";
+// import UserData from "./views/plugin/UserData";
+// import StudentChangePassword from "./views/student/ChangePassword";
+// import Dashboard from "./views/instructor/Dashboard";
+// import Courses from "./views/instructor/Courses";
+// import Review from "./views/instructor/Review";
+// import Students from "./views/instructor/Students";
+// import Earning from "./views/instructor/Earning";
+// import Orders from "./views/instructor/Orders";
+// import Coupon from "./views/instructor/Coupon";
+// import TeacherNotification from "./views/instructor/TeacherNotification";
+// import QA from "./views/instructor/QA";
+// import ChangePassword from "./views/instructor/ChangePassword";
+// import Profile from "./views/instructor/Profile";
+// import CourseCreate from "./views/instructor/CourseCreate";
+// import CourseEdit from "./views/instructor/CourseEdit";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [cartCount, setCartCount] = useState(0);
+  const [profile, setProfile] = useState([]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <CartContext.Provider value={[cartCount, setCartCount]}>
+      <ProfileContext.Provider value={[profile, setProfile]}>
+        <BrowserRouter>
+          <MainWrapper>
+            <Routes>
+              <Route path="/register/" element={<Register />} />
+              <Route path="/login/" element={<Login />} />
+            </Routes>
+          </MainWrapper>
+        </BrowserRouter>
+      </ProfileContext.Provider>
+    </CartContext.Provider>
+  );
 }
 
-export default App
+export default App;
+
