@@ -163,8 +163,7 @@ class Variant(models.Model):
     
     def items(self):
         return VariantItem.objects.filter(variant=self)
-    
-    
+        
 class VariantItem(models.Model):
     variant = models.ForeignKey(Variant, on_delete=models.CASCADE, related_name="variant_items")
     title = models.CharField(max_length=1000)

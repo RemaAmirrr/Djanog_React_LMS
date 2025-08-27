@@ -23,8 +23,7 @@ function CourseDetail() {
   const param = useParams();
 
   const country = GetCurrentAddress().country;
-  const userId = UserData().user_id;
-
+ const userId = UserData()?.user_id;
   const fetchCourse = () => {
     useAxios()
       .get(`course/course-detail/${param.slug}/`)
@@ -34,8 +33,14 @@ function CourseDetail() {
       });
   };
 
+  const getcount = async() => {
+     await apiInstance.get(`course/cart-list/${CartId()}/`).then((res) => {
+        setCartCount(res.data?.length);
+      });
+  }
   useEffect(() => {
     fetchCourse();
+    getcount();
   }, []);
 
   const addToCart = async (courseId, userId, price, country, cartId) => {
@@ -265,7 +270,7 @@ function CourseDetail() {
                             <p
                               className="mb-3"
                               dangerouslySetInnerHTML={{
-                                __html: `${course?.description}`,
+                                __html: `${course?.description?.slice(0,200)}`,
                               }}
                             ></p>
 
@@ -1330,7 +1335,7 @@ function CourseDetail() {
                                     addToCart(
                                       course?.id,
                                       userId,
-                                      course.price,
+                                      course?.price,
                                       country,
                                       CartId()
                                     )

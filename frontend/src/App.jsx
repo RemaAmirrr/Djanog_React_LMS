@@ -16,10 +16,10 @@ import CreateNewPassword from "./views/auth/CreateNewPassword";
 
 import Index from "./views/base/Index";
 import CourseDetail from "./views/base/CourseDetail";
-// import Cart from "./views/base/Cart";
-// import Checkout from "./views/base/Checkout";
+import Cart from "./views/base/Cart";
+import Checkout from "./views/base/Checkout";
 // import Success from "./views/base/Success";
-// import Search from "./views/base/Search";
+import Search from "./views/base/Search";
 
 // import StudentDashboard from "./views/student/Dashboard";
 // import StudentCourses from "./views/student/Courses";
@@ -47,6 +47,12 @@ function App() {
   const [cartCount, setCartCount] = useState(0);
   const [profile, setProfile] = useState([]);
 
+useEffect(() => {
+      apiInstance.get(`cart/stats/${CartId()}/`).then((res) => {
+        setCartCount(res.data?.length);
+      });
+}, [])
+
   return (
     <CartContext.Provider value={[cartCount, setCartCount]}>
       <ProfileContext.Provider value={[profile, setProfile]}>
@@ -63,8 +69,9 @@ function App() {
               <Route path="/" element={<Index />} />
               <Route path="/course-detail/" element={<CourseDetail />} />
               <Route path="/course-detail/:slug/" element={<CourseDetail />} />
-
-
+              <Route path="/cart/" element={<Cart />} />
+              <Route path="/checkout/:order_oid/" element={<Checkout />} />
+              <Route path="/search/" element={<Search />} />
 
             </Routes>
           </MainWrapper>

@@ -7,7 +7,8 @@ import apiInstance from "../../utils/axios";
 import CartId from "../plugin/CartId";
 import Toast from "../plugin/Toast";
 import { CartContext } from "../plugin/Context";
-import { userId } from "../../utils/constants";
+import UserData from "../plugin/UserData";
+// import { userId } from "../../utils/constants";
 
 function Cart() {
   const [cart, setCart] = useState([]);
@@ -18,16 +19,21 @@ function Cart() {
     email: "",
     country: "",
   });
+  const userId = UserData()?.user_id
+  console.log(userId)
+ 
   const fetchCartItem = async () => {
     try {
       await apiInstance.get(`course/cart-list/${CartId()}/`).then((res) => {
-        console.log(res.data);
         setCart(res.data);
       });
 
       await apiInstance.get(`cart/stats/${CartId()}/`).then((res) => {
-        console.log(res.data);
         setCartStats(res.data);
+      });
+
+      await apiInstance.get(`course/cart-list/${CartId()}/`).then((res) => {
+        setCartCount(res.data?.length);
       });
     } catch (error) {
       console.log(error);
@@ -39,12 +45,10 @@ function Cart() {
   }, []);
 
   const navigate = useNavigate()
-
   const cartItemDelete = async (itemId) => {
     await apiInstance
       .delete(`course/cart-item-delete/${CartId()}/${itemId}/`)
       .then((res) => {
-        console.log(res.data);
         fetchCartItem();
         Toast().fire({
           icon: "success",
@@ -63,7 +67,6 @@ function Cart() {
       [event.target.name]: event.target.value,
     });
   };
-
   const createOrder = async (e) => {
     e.preventDefault()
     const formdata = new FormData()
@@ -72,10 +75,8 @@ function Cart() {
     formdata.append("country", bioData.country);
     formdata.append("cart_id", CartId());
     formdata.append("user_id", userId);
-
     try {
       await apiInstance.post(`order/create-order/`, formdata).then((res) => {
-        console.log(res.data);
         navigate(`/checkout/${res.data.order_oid}/`);
       });
     } catch (error) {
@@ -86,7 +87,6 @@ function Cart() {
   return (
     <>
       <BaseHeader />
-
       <section className="py-0">
         <div className="container">
           <div className="row">
@@ -260,9 +260,27 @@ function Cart() {
                     </li>
                   </ul>
                   <div className="d-grid">
-                    <button type="submit" className="btn btn-lg btn-success">
-                      Proceed to Checkout
-                    </button>
+                    
+                      {cartCount > 0 ? (
+                         <>
+                            {userId !== undefined ? (
+                              <button type="submit" className="btn btn-lg btn-success">
+                                Proceed to Checkout
+                              </button>
+                            ) : (
+
+                            <Link to="/login/" className="btn btn-primary ms-2" type="submit">
+                              Login <i className="fas fa-sign-in-alt"></i>
+                            </Link>
+                            )}
+                         </> 
+                         ):( 
+                            <Link to="/" className="btn btn-primary ms-2" type="submit">
+                               Home Page <i className="fas fa-sign-in-alt"></i>
+                            </Link>
+                          )}
+                    
+                 
                   </div>
                   <p className="small mb-0 mt-2 text-center">
                     By proceeding to checkout, you agree to these{" "}

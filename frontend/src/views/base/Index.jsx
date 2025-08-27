@@ -17,7 +17,7 @@ function Index() {
   const [courses, setCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [cartCount, setCartCount] = useContext(CartContext);
-
+  
   const country = GetCurrentAddress().country;
   const userId = UserData()?.user_id;
   const cartId = CartId();
@@ -31,13 +31,24 @@ function Index() {
           setCourses(res.data);
           setIsLoading(false);
         });
+
+        await apiInstance.get(`cart/stats/${CartId()}/`).then((res) => {
+        setCartStats(res.data);
+      });
+
     } catch (error) {
       console.log(error);
     }
   };
 
+  const getcount = async() => {
+     await apiInstance.get(`course/cart-list/${CartId()}/`).then((res) => {
+        setCartCount(res.data?.length);
+      });
+    }
   useEffect(() => {
     fetchCourse();
+    getcount(); 
   }, []);
 
   const addToCart = async (courseId, userId, price, country, cartId) => {
@@ -70,7 +81,7 @@ function Index() {
   };
 
   // Pagination
-  const itemsPerPage = 1;
+  const itemsPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

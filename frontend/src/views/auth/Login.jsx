@@ -3,6 +3,10 @@ import { login } from "../../utils/auth";
 import BaseHeader from "../partials/BaseHeader";
 import BaseFooter from "../partials/BaseFooter";
 import { Link, useNavigate } from "react-router-dom";
+import UserData from "../plugin/UserData";
+
+const user = UserData()
+console.log(user)
 
 function Login() {
   const [email, setEmail] = useState("");
